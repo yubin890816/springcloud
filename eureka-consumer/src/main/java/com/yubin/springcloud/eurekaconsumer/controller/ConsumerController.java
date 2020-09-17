@@ -5,6 +5,7 @@ import com.netflix.discovery.EurekaClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -25,6 +26,9 @@ public class ConsumerController {
 
     @Autowired
     private EurekaClient client;
+
+    @Autowired
+    private LoadBalancerClient lbClient;
 
     @RequestMapping("/test1")
     public List<String> test1() {
@@ -47,12 +51,29 @@ public class ConsumerController {
             if (instance.getStatus() == InstanceInfo.InstanceStatus.UP) {
                 String url = "http://" + instance.getHostName() + ":" + instance.getPort() + "/test";
                 System.out.println(url);
-                // 发起服务调用
+                // 使用RestTemplate发起服务调用
                 RestTemplate restTemplate = new RestTemplate();
                 String result = restTemplate.getForObject(url, String.class);
                 System.out.println(result);
             }
         }
         return instances;
+    }
+
+    /**
+     * 使用负载均衡的方式调用远程服务
+     * @return
+     */
+    @RequestMapping("/test4")
+    public ServiceInstance test4() {
+        // ribbon 完成客户端的负载均衡
+        ServiceInstance instance = lbClient.choose("provider");
+        String url = "http://" + instance.getHost() + ":" + instance.getPort() + "/test";
+        System.out.println(url);
+        // 使用RestTemplate发起服务调用
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(url, String.class);
+        System.out.println(result);
+        return instance;
     }
 }
