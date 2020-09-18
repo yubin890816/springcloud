@@ -87,4 +87,19 @@ public class LoadBalanceConsumerController {
 
         return result;
     }
+
+    /**
+     * 自动处理URL
+     * @return
+     */
+    @RequestMapping("/testLoadBalance4")
+    public String testLoadBalance4() {
+
+        // 这个url中的 provider 指的是服务的名称, /test表示的是具体的接口地址
+        String url = "http://provider/test";
+        // 使用RestTemplate发起服务调用
+        String result = restTemplate.getForObject(url, String.class);
+
+        return result;
+    }
 }
