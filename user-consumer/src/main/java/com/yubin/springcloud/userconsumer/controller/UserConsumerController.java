@@ -27,6 +27,34 @@ public class UserConsumerController {
         return userConsumerApi.isActive();
     }
 
+    /**
+     * try {
+     *      -------限流处理-------
+     *      map(URI,线程数)
+     *      线程池(线程数)
+     *      if(当前线程满了){
+     *          throw new exception();
+     *      }
+     *      1、向服务端发起请求
+     *          1.1、判断连接超时
+     *              -> 这次请求记录到服务里
+     *          1.2、尝试向其它服务发起请求
+     *      2、还是没成功
+     *      -------熔断-------
+     *      计数连续失败次数,达到阈值 (count++)
+     *      if(count==10){
+     *          throw new exception();
+     *      }
+     *      恢复：开/关/半开(时不时的试一试)
+     * } catch(Exception e){
+     *      -------降级处理-------
+     *      1、降级方式1：避免返回不友好的信息->跳转友好页面
+     *      2、降级方式2：发送到MQ里面去
+     *      ......
+     *     return "客观稍后再来";
+     * }
+     */
+
     @RequestMapping("/findById")
     public Integer findById() {
         return userConsumerApi.getById(12);
