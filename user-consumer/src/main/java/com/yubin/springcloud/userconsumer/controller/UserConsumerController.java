@@ -1,6 +1,7 @@
 package com.yubin.springcloud.userconsumer.controller;
 
 import com.yubin.springcloud.userconsumer.feign.UserConsumerApi;
+import com.yubin.springcloud.userconsumer.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,14 @@ public class UserConsumerController {
     @RequestMapping("/providerIsActive")
     public String providerIsActive() {
         return userConsumerApi.isActive();
+    }
+
+    @Autowired
+    private RestService restService;
+
+    @RequestMapping("/isActive2")
+    public String isActive2() {
+        return restService.isActive();
     }
 
     /**
