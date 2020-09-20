@@ -1,7 +1,6 @@
 package com.yubin.springcloud.userapi.service;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author YUBIN
  * @create 2020-09-19
  */
-@RequestMapping("/user")
+//@RequestMapping("/user")
 public interface UserApi {
 
     @GetMapping("/isActive")

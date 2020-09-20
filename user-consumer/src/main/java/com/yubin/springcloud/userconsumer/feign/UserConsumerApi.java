@@ -1,6 +1,7 @@
 package com.yubin.springcloud.userconsumer.feign;
 
 import com.yubin.springcloud.userapi.service.UserApi;
+import com.yubin.springcloud.userconsumer.hystrix.UserProviderFallBackError;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,8 @@ import java.util.Map;
  * @create 2020-09-19
  */
 // name:表示服务提供者的服务名
-@FeignClient(name = "user-provider")
+//@FeignClient(name = "user-provider", fallback = UserProviderFallBack.class)
+@FeignClient(name = "user-provider", fallbackFactory = UserProviderFallBackError.class)
 public interface UserConsumerApi extends UserApi {
 
     @GetMapping("/getMap")

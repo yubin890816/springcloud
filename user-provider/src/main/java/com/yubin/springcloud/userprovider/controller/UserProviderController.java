@@ -24,11 +24,12 @@ public class UserProviderController implements UserApi {
 
     @Override
     public String isActive() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //try {
+        //    Thread.sleep(1000);
+        //} catch (InterruptedException e) {
+        //    e.printStackTrace();
+        //}
+        int i = 1 / 0;
         int count = atomicInteger.getAndIncrement();
         System.out.println("port:" + port + "第" + count + "次调用");
         return "user provider is ok";
