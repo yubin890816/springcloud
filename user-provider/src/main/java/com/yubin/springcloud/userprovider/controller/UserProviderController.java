@@ -29,10 +29,10 @@ public class UserProviderController implements UserApi {
         //} catch (InterruptedException e) {
         //    e.printStackTrace();
         //}
-        int i = 1 / 0;
+        //int i = 1 / 0;
         int count = atomicInteger.getAndIncrement();
         System.out.println("port:" + port + "第" + count + "次调用");
-        return "user provider is ok";
+        return "user provider is ok:" + port;
     }
 
     @Override
